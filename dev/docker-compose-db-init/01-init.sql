@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS `good_night`;
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';

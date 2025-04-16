@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  good_night_mysql:
+    container_name: good_night_mysql
+    image: mysql:8.0.31
+    volumes:
+      - db:/var/lib/mysql
+      - ./docker-compose-db-init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: gnpassword
+      MYSQL_USER: gn_user
+      MYSQL_PASSWORD: gn_user
+    networks:
+      - good_night_net
+
+volumes:
+  db:
+
+networks:
+  good_night_net:
+    name: good_night_net
