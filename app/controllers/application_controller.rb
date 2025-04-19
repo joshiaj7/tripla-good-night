@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   # rescue from all errors and render the error message
   def render_response(body = nil, status = :ok, message = nil)
     if body.present?
-      render json: body[:body], status: status
+      render json: body, status: status
     else
       render json: { message: message }, status: :ok
     end

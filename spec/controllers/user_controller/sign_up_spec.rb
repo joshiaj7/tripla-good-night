@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe ::UserController, type: :controller do
-
   describe "#signup" do
     let(:params) { { name: "John Doe" } }
     let(:user) { instance_double("User", id: 1, name: "John Doe") }
@@ -18,7 +17,7 @@ RSpec.describe ::UserController, type: :controller do
       end
 
       it "returns a success message" do
-        expect(response.body).to eq({ "id": user.id, "name": user.name}.to_json)
+        expect(response.body).to eq({ "id": user.id, "name": user.name }.to_json)
       end
 
       it "returns a 200 status code" do
@@ -40,12 +39,12 @@ RSpec.describe ::UserController, type: :controller do
         expect(response.body).to eq({ error: "invalid parameter: name" }.to_json)
       end
 
-      it "returns a 500 status code" do
-        expect(response.status).to eq(422)
+      it "returns a 400 status code" do
+        expect(response.status).to eq(400)
       end
     end
 
-    context "when an unexpected error occurs" do  
+    context "when an unexpected error occurs" do
       let(:unexpected_error) { StandardError.new("Unexpected error") }
 
       before do

@@ -15,7 +15,14 @@ module BaseError
       else
         @message = "invalid parameter"
       end
-      @status  = 422
+      @status  = 400
+    end
+  end
+
+  class UserNotFoundError < GeneralError
+    def initialize
+      @message = "user not found"
+      @status  = 404
     end
   end
 end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   scope "v1" do
     scope "/users" do
+      post "/login", to: "user#login"
       post "/signup", to: "user#signup"
     end
   end

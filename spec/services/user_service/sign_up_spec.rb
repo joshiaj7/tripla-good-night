@@ -3,7 +3,7 @@ require 'rails_helper'
 describe UserService::SignUp, type: :service do
   let(:run_service) { UserService.sign_up(params) }
   let(:params)      { { name: name } }
-  let(:name)       { "John Doe" }
+  let(:name)        { "John Doe" }
 
   context "when name is not present" do
     let(:name) { "" }
