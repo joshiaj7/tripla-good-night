@@ -15,8 +15,10 @@ class ApplicationController < ActionController::Base
 
   # rescue from all errors and render the error message
   def render_error(error)
-    render json: { error: error.message }, status: error.status
-  rescue StandardError => e
-    render json: { error: e.message }, status: :internal_server_error
+    if error.is_a?(BaseError::GeneralError)
+      render json: { error: error.message }, status: error.status
+    else
+      render json: { error: error.message }, status: :internal_server_error
+    end
   end
 end

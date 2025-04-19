@@ -11,7 +11,7 @@ module UserService
 
       user = User.new
       user.name = @name
-      user.save!  
+      user.save!
     end
 
     def validate!
