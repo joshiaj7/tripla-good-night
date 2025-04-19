@@ -4,11 +4,12 @@ RSpec.describe ::UserController, type: :controller do
 
   describe "#signup" do
     let(:params) { { name: "John Doe" } }
+    let(:user) { instance_double("User", id: 1, name: "John Doe") }
     let(:invalid_param_error) { ::BaseError::InvalidParameterError.new("name") }
 
     context "when user is created successfully" do
       before do
-        allow(UserService).to receive(:sign_up).with(params)
+        allow(UserService).to receive(:sign_up).with(params).and_return(user)
         post :signup, params: params
       end
 
@@ -17,7 +18,7 @@ RSpec.describe ::UserController, type: :controller do
       end
 
       it "returns a success message" do
-        expect(response.body).to eq({ message: "User created successfully" }.to_json)
+        expect(response.body).to eq({ "id": user.id, "name": user.name}.to_json)
       end
 
       it "returns a 200 status code" do

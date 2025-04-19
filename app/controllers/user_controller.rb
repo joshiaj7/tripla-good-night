@@ -1,9 +1,10 @@
 class UserController < ApplicationController
   def signup
     # call signup service
-    UserService.sign_up(params.permit(:name).to_h)
+    user_params = { name: params[:name] }
+    user = UserService.sign_up(user_params)
 
-    render_response message: "User created successfully"
+    render_response body: { id: user.id, name: user.name }
   rescue => e
     render_error e
   end

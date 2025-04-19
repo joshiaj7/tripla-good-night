@@ -19,8 +19,8 @@ describe UserService::SignUp, type: :service do
     end
 
     it "sets the name of the user" do
-      run_service
-      expect(User.last.name).to eq(name)
+      user = run_service
+      expect(user.name).to eq(name)
     end
   end
 end
