@@ -25,4 +25,11 @@ module BaseError
       @status  = 404
     end
   end
+
+  class UserUnauthorizedError < GeneralError
+    def initialize
+      @message = "user is unauthorized"
+      @status  = :unauthorized
+    end
+  end
 end
