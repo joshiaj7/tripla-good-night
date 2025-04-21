@@ -14,5 +14,10 @@ Rails.application.routes.draw do
     scope "/schedules" do
       post "/clock-in", to: "schedule#clock_in"
     end
+
+    scope "/watchlists" do
+      post "/follow", to: "watchlist#follow"
+      post "/unfollow", to: "watchlist#unfollow"
+    end
   end
 end
