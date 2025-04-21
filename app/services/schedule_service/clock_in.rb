@@ -12,7 +12,7 @@ module ScheduleService
       user = User.find_by(id: @user_id)
       raise ::BaseError::UserNotFoundError.new if user.nil?
 
-      KafkaClient.deliver_message({ user_id: @user_id, clock_in_at: Time.now.utc }.to_json, topic: "schedule-clock-in")
+      KafkaClient.deliver_message({ user_id: @user_id, clocked_in_at: Time.now.utc }.to_json, topic: "schedule-clock-in")
     end
 
     def validate!

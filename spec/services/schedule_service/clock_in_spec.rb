@@ -37,7 +37,7 @@ describe ScheduleService::ClockIn, type: :service do
           expect(KafkaClient).to receive(:deliver_message).with(
             {
               user_id: user_id,
-              clock_in_at: frozen_time
+              clocked_in_at: frozen_time
             }.to_json,
             topic: "schedule-clock-in"
           )
