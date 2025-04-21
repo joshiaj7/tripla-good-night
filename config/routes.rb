@@ -10,8 +10,9 @@ Rails.application.routes.draw do
       post "/login", to: "user#login"
       post "/signup", to: "user#signup"
     end
-  end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+    scope "/schedules" do
+      post "/clock-in", to: "schedule#clock_in"
+    end
+  end
 end
