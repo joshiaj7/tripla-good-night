@@ -1,9 +1,15 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+10.times do
+  user_id = rand(2..4)
+  clocked_in_at = Faker::Time.between(from: 7.days.ago, to: 1.day.ago)
+  clocked_out_at = clocked_in_at + rand(1..8).hours + rand(0..59).minutes
+  duration_in_seconds = (clocked_out_at - clocked_in_at).to_i
+
+  Schedule.create!(
+    user_id: user_id,
+    clocked_in_at: clocked_in_at,
+    clocked_out_at: clocked_out_at,
+    duration_in_seconds: duration_in_seconds,
+    created_at: clocked_in_at,
+    updated_at: clocked_out_at
+  )
+end

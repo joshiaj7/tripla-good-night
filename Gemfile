@@ -71,3 +71,4 @@ end
 gem "mysql2", ">= 0.5"
 gem "jwt"
 gem "ruby-kafka"
+gem "faker"
