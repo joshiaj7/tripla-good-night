@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_21_132515) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_21_151303) do
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "clocked_in_at"
@@ -26,5 +26,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_21_132515) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "watchlists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "follower_id", null: false
+    t.integer "followed_id", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id", "followed_id", "active"], name: "idx_follower_followed_active"
+    t.index ["follower_id", "followed_id"], name: "idx_follower_followed", unique: true
   end
 end

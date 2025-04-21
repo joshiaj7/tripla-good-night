@@ -32,4 +32,11 @@ module BaseError
       @status  = :unauthorized
     end
   end
+
+  class FollowingYourselfError < GeneralError
+    def initialize
+      @message = "you can not follow yourself"
+      @status  = :unprocessable_entity
+    end
+  end
 end
