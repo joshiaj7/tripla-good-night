@@ -20,9 +20,12 @@ class ApplicationController < ActionController::Base
   end
 
   # rescue from all errors and render the error message
-  def render_response(body = nil, status = :ok, message = nil)
+  def render_response(body = nil, meta = nil, status = :ok, message = nil)
     if body.present?
-      render json: body, status: status
+      result = { data: body }
+      result[:meta] = meta if meta.present?
+
+      render json: result, status: status
     else
       render json: { message: message }, status: :ok
     end

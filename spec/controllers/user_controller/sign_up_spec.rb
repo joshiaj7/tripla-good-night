@@ -17,7 +17,7 @@ RSpec.describe ::UserController, type: :controller do
       end
 
       it "returns a success message" do
-        expect(response.body).to eq({ "id": user.id, "name": user.name }.to_json)
+        expect(response.body).to eq({ data: { "id": user.id, "name": user.name } }.to_json)
       end
 
       it "returns a 200 status code" do

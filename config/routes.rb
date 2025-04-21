@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
     scope "/schedules" do
       post "/clock-in", to: "schedule#clock_in"
+      get "/leaderboards", to: "schedule#leaderboards"
     end
 
     scope "/watchlists" do

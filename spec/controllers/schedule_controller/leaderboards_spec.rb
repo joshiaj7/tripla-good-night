@@ -1,27 +1,30 @@
 require "rails_helper"
 
 RSpec.describe ::ScheduleController, type: :controller do
-  describe "#clock_in" do
-    let(:run_service) { post :clock_in, params: params }
-    let(:params) { { user_id: user_id } }
+  describe "#leaderboards" do
+    let(:run_service) { post :leaderboards, params: params }
+    let(:params) { { limit: limit, offset: offset } }
+    let(:limit) { 10 }
+    let(:offset) { 0 }
     let(:user_id)  { 1 }
-    let(:clock_in_params) { { user_id: user_id } }
+    let(:leaderboard_params) { { user_id: user_id, limit: limit, offset: offset } }
+    let(:leaderboard_result) { [ { schedule_id: 1, duration: 120, user_name: "John Doe" } ] }
+    let(:leaderboard_meta) { { total_count: 1, limit: limit, offset: offset } }
 
     context "when the user is authenticated" do
       before do
         allow(controller).to receive(:current_user_id).and_return(user_id)
-        allow(ScheduleService).to receive(:clock_in).with(clock_in_params)
+        allow(ScheduleService).to receive(:get_leaderboard).with(leaderboard_params).and_return(leaderboard_result, leaderboard_meta)
       end
 
-      it "calls the clock_in method of ScheduleService" do
-        expect(ScheduleService).to receive(:clock_in).with(clock_in_params)
+      it "calls the get_leaderboard method of ScheduleService" do
+        expect(ScheduleService).to receive(:get_leaderboard).with(leaderboard_params)
         run_service
       end
 
       it "returns a success message" do
         run_service
         expect(response.status).to eq(200)
-        expect(JSON.parse(response.body)["data"]["message"]).to eq("clock in successfully")
       end
     end
 
@@ -40,7 +43,7 @@ RSpec.describe ::ScheduleController, type: :controller do
     context "when an error occurs" do
       before do
         allow(controller).to receive(:current_user_id).and_return(user_id)
-        allow(ScheduleService).to receive(:clock_in).and_raise(StandardError.new("An error occurred"))
+        allow(ScheduleService).to receive(:get_leaderboard).and_raise(StandardError.new("An error occurred"))
       end
 
       it "returns an error message" do

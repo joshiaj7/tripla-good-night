@@ -20,7 +20,7 @@ RSpec.describe ::WatchlistController, type: :controller do
       end
 
       it "returns a success message" do
-        expect(response.body).to eq({ message: "unfollowed successfully" }.to_json)
+        expect(response.body).to eq({ data: { message: "unfollowed successfully" } }.to_json)
       end
 
       it "returns a 200 status code" do
