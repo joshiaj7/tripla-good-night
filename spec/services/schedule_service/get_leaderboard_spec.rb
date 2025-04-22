@@ -66,8 +66,8 @@ describe ScheduleService::GetLeaderboard, type: :service do
           result, meta = run_service
 
           expect(result.size).to eq(3)
-          expect(result.first[:duration]).to eq(7204)
-          expect(result.last[:duration]).to eq(7202)
+          expect(result.first[:duration_in_seconds]).to eq(7204)
+          expect(result.last[:duration_in_seconds]).to eq(7202)
           expect(meta[:total_count]).to eq(3)
         end
       end

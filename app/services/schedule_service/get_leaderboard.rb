@@ -7,8 +7,8 @@ module ScheduleService
 
     def initialize(params)
       @user_id = params[:user_id].to_i
-      @limit = params[:limit].to_i == 0 ? DEFAULT_LIMIT : params[:limit].to_i
-      @offset = params[:offset].to_i == 0 ? DEFAULT_OFFSET : params[:offset].to_i
+      @limit = params[:limit].to_i <= 0 ? DEFAULT_LIMIT : params[:limit].to_i
+      @offset = params[:offset].to_i < 0 ? DEFAULT_OFFSET : params[:offset].to_i
     end
 
     def perform
@@ -44,7 +44,7 @@ module ScheduleService
       for schedule in schedules
         result << {
           schedule_id: schedule.id,
-          duration: schedule.duration_in_seconds,
+          duration_in_seconds: schedule.duration_in_seconds,
           user_name: followed_users_map[schedule.user_id].name
         }
       end
