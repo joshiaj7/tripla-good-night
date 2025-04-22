@@ -23,6 +23,9 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - good_night_net
+
   kafka:
     container_name: kafka
     image: confluentinc/cp-kafka:7.3.0
@@ -39,9 +42,47 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: ${KAFKA_ADVERTISED_LISTENERS}
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+    networks:
+      - good_night_net
+
+
+  good_night_api:
+    build:
+      context: ../
+      dockerfile: deploy/api/Dockerfile
+    depends_on:
+      - good_night_mysql
+      - kafka
+    ports:
+      - "3000:3000"
+    environment:
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_POOL: ${MYSQL_POOL}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      KAFKA_BROKERS: ${KAFKA_BROKERS}
+      JWT_SECRET: ${JWT_SECRET}
+    networks:
+      - good_night_net
+
+  schedule_clock_in_consumer:
+    build:
+      context: ../
+      dockerfile: deploy/schedule_clock_in_consumer/Dockerfile
+    depends_on:
+      - good_night_mysql
+      - kafka
+    environment:
+      KAFKA_BROKERS: kafka:9092
+    restart: on-failure
+    networks:
+      - good_night_net
 
 volumes:
   db:
