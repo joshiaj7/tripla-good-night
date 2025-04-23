@@ -79,7 +79,14 @@ services:
       - good_night_mysql
       - kafka
     environment:
-      KAFKA_BROKERS: kafka:9092
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_POOL: ${MYSQL_POOL}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      KAFKA_BROKERS: ${KAFKA_BROKERS}
     restart: on-failure
     networks:
       - good_night_net

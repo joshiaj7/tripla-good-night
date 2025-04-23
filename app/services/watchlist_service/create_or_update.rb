@@ -11,7 +11,10 @@ module WatchlistService
     def perform
       validate!
 
-      watchlist = Watchlist.find_by(follower_id: @follower_id, followed_id: @followed_id)
+      followed_user = User.find_by(id: @followed_id)
+      raise ::BaseError::UserNotFoundError.new if followed_user.nil?
+
+      watchlist = Watchlist.find_by(follower_id: @follower_id, followed_id: followed_user.id)
 
       # if watchlist not found, create a new one
       if watchlist.nil?
