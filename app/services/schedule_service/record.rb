@@ -15,7 +15,6 @@ module ScheduleService
 
       # check if the user has already clocked in
       latest_schedule = Schedule.where(user_id: @user_id).order(created_at: :desc).first
-      # latest_schedule = Schedule.where(user_id: @user_id).first
 
       # if the user clocked in for the first time
       # create a new schedule record

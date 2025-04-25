@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_21_151303) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_25_145147) do
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "clocked_in_at"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_21_151303) do
     t.integer "duration_in_seconds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "created_at"], name: "idx_user_id_and_created_at"
+    t.index ["user_id", "created_at", "duration_in_seconds"], name: "idx_user_id_created_at_duration_in_seconds"
     t.index ["user_id"], name: "idx_user_id"
   end
 
